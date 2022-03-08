@@ -16,8 +16,9 @@ const Card = props => {
     // console.log(props)
     setShowDetails(!showDetails);
     // props.setSelected(props.card)
-    console.log("selected card is", props.selected.name)
+    // console.log("selected card is", props.selected.name)
     // props.setShowCards(false);
+    console.log(props.card);
   }
 
   if (props.card) {
@@ -25,67 +26,12 @@ const Card = props => {
       <ThemeProvider theme={props.theme}>
         <div className="d-flex mt-5 justify-content-center align-items-start">
           <div className="d-flex flex-column">
-            <h3 className="d-flex justify-content-center align-items-center">{props.card.name}</h3>
+            <h3 className="d-flex justify-content-center align-items-center">{props.card.name} </h3>
+            {props.card.upright ? <p>(Upright)</p>: <p>(Reversed)</p> }
             <Button onClick = {handleClick}>
-            <img src={`./images/Cards/${props.card.nameShort}.png`}></img>
+            <img src={`./images/Cards/${props.card.nameShort}.png`} className = {props.card.upright ? "upright" : "reversed"}></img>
             </Button>
-            {/* <Accordion theme ={props.theme} className={"accordion"}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-                color = "primary"
-                className={"accordion"}
-                sx={{backgroundColor: "#c7b3e2;"}}
-              >
-                <Typography className="accordion-text" color="primary">Definition</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Accordion className="accordion">
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                    color = "primary"
-                  >
-                    <Typography className="accordion-text">Description</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography className="accordion-text">
-                      {props.card.desc}
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion className="accordion">
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Typography className="accordion-text">Upright Meaning</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography className="accordion-text">
-                      {props.card.meaningUp}
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion className="accordion">
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Typography className="accordion-text">Reversed Meaning</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography className="accordion-text">
-                      {props.card.meaningRev}
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
-              </AccordionDetails>
-            </Accordion> */}
+        
           </div>
 
             {showDetails ? <div className = "mt-3 w-50">
@@ -146,4 +92,6 @@ const Card = props => {
 Card.propTypes = {}
 
 export default Card;
+
+
 

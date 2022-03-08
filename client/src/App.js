@@ -37,7 +37,6 @@ function App() {
   });
 
 
-
   return (
     <div className="App p-3">
       <NavBar theme={theme} />

@@ -50,7 +50,7 @@ const Cards = (props) => {
     }
 
     const handleSearch = (e) => {
-        // e.preventDefault();
+        e.preventDefault();
         if (allCards == null) {
             getAllCards();
         }

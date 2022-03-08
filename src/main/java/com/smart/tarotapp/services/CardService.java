@@ -23,9 +23,21 @@ public class CardService {
 		Long randomIdNumber = (long) (Math.random() * (78-1) + 1);
 //		System.out.println(randomIdNumber);
 		
+		double randomOrientation = Math.random();
+		boolean orientation;
+		
+		if (randomOrientation > .5) {
+			orientation = true;
+		}
+		else {
+			orientation = false;
+		}
+		
 		Optional<Card> optionalCard = cardRepo.findById(randomIdNumber);
 		if (optionalCard.isPresent()) {
-			return optionalCard.get();
+			Card cardToReturn = optionalCard.get();
+			cardToReturn.setUpright(orientation);
+			return cardToReturn;
 		} else {
 			return null;
 		}
