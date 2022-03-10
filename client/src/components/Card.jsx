@@ -27,7 +27,7 @@ const Card = props => {
         <div className="d-flex mt-5 justify-content-center align-items-start">
           <div className="d-flex flex-column">
             <h3 className="d-flex justify-content-center align-items-center">{props.card.name} </h3>
-            {props.card.upright ? <p>(Upright)</p>: <p>(Reversed)</p> }
+            {/* {props.card.upright ? <p>(Upright)</p>: <p>(Reversed)</p> } */}
             <Button onClick = {handleClick}>
             <img src={`./images/Cards/${props.card.nameShort}.png`} className = {props.card.upright ? "upright" : "reversed"}></img>
             </Button>
