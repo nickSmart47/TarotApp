@@ -8,28 +8,56 @@ const Spread = props => {
 
     const [intention, setIntention] = useState("");
     const [cardsInSpread, setCardsInSpread] = useState([]);
-    const [numberOfCards, setNumberOfCards] = useState(0);
+    const [numCards, setNumCards] = useState(0);
     const [showSpread, setShowSpread] = useState(false);
     const [notes, setNotes] = useState("");
 
 
+    const saveSpread = (e) => {
+        e.preventDefault();
+
+        let spreadObj = {
+            intention,
+            numCards,
+            notes,
+            cardsInSpread,
+            credentials: "include"
+        }
+
+        axios.post("/api/spreads", spreadObj)
+            .then(res => {
+                console.log("response after post request --->", res)
+
+                if (res.data.errors) {
+                    console.log('we got errors bro', res.data.errors)
+                }
+                else {
+                    console.log("success dude!")
+                }
+            })
+            .catch(err => {
+                console.log("errors with post request", err)
+                console.log(spreadObj)
+            })
+    }
+
     const handleNumCards = (e) => {
-        setNumberOfCards(e.target.value);
+        setNumCards(e.target.value);
     }
 
     const handleSpreadButton = () => {
-        console.log(numberOfCards)
+        console.log(numCards)
         if (cardsInSpread != []) {
             setCardsInSpread([]);
         }
-        let numCardsAsInt = parseInt(numberOfCards)
+        let numCardsAsInt = parseInt(numCards)
         generateSpread(numCardsAsInt)
     }
 
     const generateSpread = (numCards) => {
-        // console.log(numberOfCards, typeof(parseInt(numberOfCards)))
+        // console.log(numCards, typeof(parseInt(numCards)))
         // setCardsInSpread([]);
-        console.log("number going into for loop is", numCards)
+        // console.log("number going into for loop is", numCards)
         for (let i = 0; i < numCards; i++) {
             axios.get("/api/cards/random")
                 .then(response => {
@@ -57,12 +85,12 @@ const Spread = props => {
                     </div>
                     <div className="">
                         {showSpread ?
-                            <div className = "d-flex flex-column gap-3">
+                            <div className="d-flex flex-column gap-3">
                                 <TextField label="Enter your notes" multiline rows={5} maxRows={8} color="secondary" onChange={(e) => setNotes(e.target.value)} type="textarea" name="notes" id="" placeholder="Enter your notes here" />
                                 <Button
                                     variant="contained"
                                     color="secondary"
-                                    onClick={handleSpreadButton}>
+                                    onClick={saveSpread}>
                                     Save Spread
                                 </Button>
                             </div>

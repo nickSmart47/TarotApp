@@ -13,7 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,7 +31,7 @@ public class Spread {
 
 	@NotEmpty
 	private String intention;
-	@NotEmpty
+	@Min(value= 1, message="Number of Cards must be at least 1")
 	private Integer numCards;
 	@Lob
 	private String notes;
@@ -50,6 +53,26 @@ public class Spread {
 	public Spread() {
 		
 	}
+	
+	@PrePersist
+	protected void onCreate() {
+		this.createdAt = new Date();
+	}
+	@PreUpdate
+	protected void onUpdate() {
+		this.updatedAt = new Date();
+	}
+	
+	
+	public Spread(@NotEmpty String intention, @NotEmpty Integer numCards, String notes, List<Card> cardsInSpread) {
+		super();
+		this.intention = intention;
+		this.numCards = numCards;
+		this.notes = notes;
+		this.cardsInSpread = cardsInSpread;
+	}
+
+
 
 	public Long getId() {
 		return id;

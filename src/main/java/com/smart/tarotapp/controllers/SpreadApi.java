@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,9 +31,10 @@ public class SpreadApi {
 	}
 	
 	@PostMapping("/spreads")
-	public Spread createSpread() {
-		Spread s = new Spread();
-		return spreadServ.createSpread(s);
+	public Spread createSpread(@RequestBody Spread spreadObj) {
+		Spread spread = spreadObj;
+//		System.out.println(spread);
+		return spreadServ.createSpread(spread);
 	}
 
 }
