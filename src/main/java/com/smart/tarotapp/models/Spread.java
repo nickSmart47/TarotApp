@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -49,6 +50,10 @@ public class Spread {
 				inverseJoinColumns = @JoinColumn(name = "card_id")
 			)
 	private List<Card> cardsInSpread;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="creator_id")
+	private User creator;
 	
 	public Spread() {
 		
@@ -128,6 +133,14 @@ public class Spread {
 
 	public void setCardsInSpread(List<Card> cardsInSpread) {
 		this.cardsInSpread = cardsInSpread;
+	}
+
+	public User getCreator() {
+		return creator;
+	}
+
+	public void setCreator(User creator) {
+		this.creator = creator;
 	}
 	
 	
