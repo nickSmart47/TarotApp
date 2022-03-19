@@ -27,16 +27,19 @@ const Cards = (props) => {
     const getAllCards = () => {
         setSelected(null);
 
-        if (!showCards) {
-            setShowCards(true);
-        }
+        
 
+        // console.log('we got here')
+        
         if (!shuffled) {
             axios.get("/api/cards")
-                .then(response => {
+            .then(response => {
                     setAllCards(response.data);
                     // setShowCards(!showCards);
-                    console.log(allCards);
+                    // console.log(allCards);
+                    if (!showCards) {
+                        setShowCards(true);
+                    }
                 })
         }
         else {
@@ -44,7 +47,10 @@ const Cards = (props) => {
                 .then(response => {
                     setAllCards(response.data);
                     // setShowCards(!showCards);
-                    console.log(allCards);
+                    // console.log(allCards);
+                    if (!showCards) {
+                        setShowCards(true);
+                    }
                 })
         }
     }
@@ -89,7 +95,9 @@ const Cards = (props) => {
         setSearchTerm(e.target.value)
     }
 
-
+    const setSelectedCard = (card) => {
+        console.log('current selected card is', card.name);
+    }
 
     return (
         <ThemeProvider theme={props.theme}>
@@ -109,7 +117,7 @@ const Cards = (props) => {
                             <li className="list-unstyled" key={i}>
                                 <Card card={item}
                                     selected={selected}
-                                    setSelected={setSelected}
+                                    setSelected={setSelectedCard}
                                     setShowCards={setShowCards}
                                     theme={props.theme}>
                                 </Card>
@@ -130,4 +138,3 @@ const Cards = (props) => {
 
 
 export default Cards;
-

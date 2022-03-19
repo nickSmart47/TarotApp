@@ -15,7 +15,7 @@ const Card = props => {
 
   const handleClick = () => {
     setShowDetails(!showDetails);
-    // console.log(props.card);
+    props.setSelected(props.card);
   }
 
   if (props.card) {
@@ -47,6 +47,3 @@ const Card = props => {
 Card.propTypes = {}
 
 export default Card;
-
-
-
