@@ -132,6 +132,14 @@ public class User {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
+	public List<Spread> getSpreads() {
+		return spreads;
+	}
+
+	public void setSpreads(List<Spread> spreads) {
+		this.spreads = spreads;
+	}
 	
 	
 	
