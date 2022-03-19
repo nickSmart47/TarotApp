@@ -27,11 +27,11 @@ const Cards = (props) => {
     const getAllCards = () => {
         setSelected(null);
 
-        if (!showCards){
+        if (!showCards) {
             setShowCards(true);
         }
 
-        if (!shuffled){
+        if (!shuffled) {
             axios.get("/api/cards")
                 .then(response => {
                     setAllCards(response.data);
@@ -39,7 +39,7 @@ const Cards = (props) => {
                     console.log(allCards);
                 })
         }
-        else{
+        else {
             axios.get("/api/cards/shuffled")
                 .then(response => {
                     setAllCards(response.data);
@@ -66,7 +66,12 @@ const Cards = (props) => {
     }
 
     const shuffleCards = () => {
-        setShuffled(!shuffled);
+        setShuffled(true);
+        getAllCards();
+    }
+
+    const allCardsClickHandler = () => {
+        setShuffled(false);
         getAllCards();
     }
 
@@ -91,7 +96,7 @@ const Cards = (props) => {
             <div>
                 <h1>Tarot Cards</h1>
                 <div className="d-flex gap-3 justify-content-center">
-                    <Button variant="contained" color="secondary" onClick={getAllCards}>All Cards</Button>
+                    <Button variant="contained" color="secondary" onClick={allCardsClickHandler}>All Cards</Button>
                     <Button variant="contained" color="secondary" onClick={shuffleCards}>Shuffle Cards</Button>
                     <Button variant="contained" color="secondary" onClick={getRandomCard}>Draw Card</Button>
                     <TextField label="Search for a card" color="secondary" onChange={(e) => handleSearch(e)} type="text" name="search" id="" placeholder="Search for a Card" />
@@ -102,7 +107,12 @@ const Cards = (props) => {
                     }).map((item, i) => {
                         return (
                             <li className="list-unstyled" key={i}>
-                                <Card card={item} selected={selected} setSelected={setSelected} setShowCards = {setShowCards}theme={props.theme}></Card>
+                                <Card card={item}
+                                    selected={selected}
+                                    setSelected={setSelected}
+                                    setShowCards={setShowCards}
+                                    theme={props.theme}>
+                                </Card>
                             </li>
                         )
                     })

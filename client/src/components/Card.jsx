@@ -15,8 +15,7 @@ const Card = props => {
 
   const handleClick = () => {
     setShowDetails(!showDetails);
-    
-    console.log(props.card);
+    // console.log(props.card);
   }
 
   if (props.card) {
