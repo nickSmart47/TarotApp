@@ -18,18 +18,35 @@ const Cards = (props) => {
 
     const [selected, setSelected] = useState(null);
 
+    const [shuffled, setShuffled] = useState(false);
+
     // const changeSelected = (card) => {
     //     setSelected(card);
     // }
 
     const getAllCards = () => {
         setSelected(null);
-        axios.get("/api/cards")
-            .then(response => {
-                setAllCards(response.data);
-                setShowCards(!showCards);
-                console.log(allCards);
-            })
+
+        if (!showCards){
+            setShowCards(true);
+        }
+
+        if (!shuffled){
+            axios.get("/api/cards")
+                .then(response => {
+                    setAllCards(response.data);
+                    // setShowCards(!showCards);
+                    console.log(allCards);
+                })
+        }
+        else{
+            axios.get("/api/cards/shuffled")
+                .then(response => {
+                    setAllCards(response.data);
+                    // setShowCards(!showCards);
+                    console.log(allCards);
+                })
+        }
     }
 
 
@@ -40,13 +57,17 @@ const Cards = (props) => {
         axios.get("/api/cards/random")
             .then(response => {
                 setRandomCard(response.data);
-                // console.log(response.data)
                 if (!showRandomCard) {
 
                     setShowRandomCard(true);
                 }
                 console.log(randomCard);
             })
+    }
+
+    const shuffleCards = () => {
+        setShuffled(!shuffled);
+        getAllCards();
     }
 
     const handleSearch = (e) => {
@@ -61,7 +82,6 @@ const Cards = (props) => {
             setShowRandomCard(false);
         }
         setSearchTerm(e.target.value)
-        // console.log(searchTerm)
     }
 
 
@@ -72,11 +92,11 @@ const Cards = (props) => {
                 <h1>Tarot Cards</h1>
                 <div className="d-flex gap-3 justify-content-center">
                     <Button variant="contained" color="secondary" onClick={getAllCards}>All Cards</Button>
+                    <Button variant="contained" color="secondary" onClick={shuffleCards}>Shuffle Cards</Button>
                     <Button variant="contained" color="secondary" onClick={getRandomCard}>Draw Card</Button>
                     <TextField label="Search for a card" color="secondary" onChange={(e) => handleSearch(e)} type="text" name="search" id="" placeholder="Search for a Card" />
                 </div>
                 <ul className="d-flex flex-wrap justify-content-center align-items-center gap-2">
-                    {/* {selected ? <div><Card card = {selected}></Card></div> : <div></div>} */}
                     {showCards ? allCards.filter((item, i) => {
                         return item.name.toLowerCase().includes(searchTerm.toLowerCase())
                     }).map((item, i) => {

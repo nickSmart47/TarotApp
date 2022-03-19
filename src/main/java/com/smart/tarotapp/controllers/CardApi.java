@@ -22,6 +22,11 @@ public class CardApi {
 		return cardServ.allCards();
 	}
 	
+	@GetMapping("/cards/shuffled")
+	public List<Card> allCardsShuffled(){
+		return cardServ.allCardsShuffled();
+	}
+	
 	@GetMapping("/cards/random")
 	public Card randomCard() {
 		return cardServ.getRandomCard();
