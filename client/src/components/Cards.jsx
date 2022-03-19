@@ -18,6 +18,9 @@ const Cards = (props) => {
 
     const [selected, setSelected] = useState(null);
 
+    const [showSelected, setShowSelected] = useState(false);
+
+
     const [shuffled, setShuffled] = useState(false);
 
     // const changeSelected = (card) => {
@@ -60,6 +63,9 @@ const Cards = (props) => {
         if (showCards) {
             setShowCards(!showCards);
         }
+        else if (showSelected){
+            setShowSelected(false);
+        }
         axios.get("/api/cards/random")
             .then(response => {
                 setRandomCard(response.data);
@@ -97,6 +103,8 @@ const Cards = (props) => {
 
     const setSelectedCard = (card) => {
         setShowCards(!showCards);
+        setShowRandomCard(!showRandomCard)
+        setShowSelected(true)
         setSelected(card);
         console.log('current selected card is', selected);
     }
@@ -112,7 +120,7 @@ const Cards = (props) => {
                     <TextField label="Search for a card" color="secondary" onChange={(e) => handleSearch(e)} type="text" name="search" id="" placeholder="Search for a Card" />
                 </div>
                 <ul className="d-flex flex-wrap justify-content-center align-items-center gap-2">
-                    {selected ? <li className="list-inline-item">
+                    {(selected && showSelected) ? <li className="list-inline-item">
                             <Card card={selected} theme={props.theme}></Card>
                         </li>
                         : <></> }
