@@ -96,7 +96,9 @@ const Cards = (props) => {
     }
 
     const setSelectedCard = (card) => {
-        console.log('current selected card is', card.name);
+        setShowCards(!showCards);
+        setSelected(card);
+        console.log('current selected card is', selected);
     }
 
     return (
@@ -110,6 +112,10 @@ const Cards = (props) => {
                     <TextField label="Search for a card" color="secondary" onChange={(e) => handleSearch(e)} type="text" name="search" id="" placeholder="Search for a Card" />
                 </div>
                 <ul className="d-flex flex-wrap justify-content-center align-items-center gap-2">
+                    {selected ? <li className="list-inline-item">
+                            <Card card={selected} theme={props.theme}></Card>
+                        </li>
+                        : <></> }
                     {showCards ? allCards.filter((item, i) => {
                         return item.name.toLowerCase().includes(searchTerm.toLowerCase())
                     }).map((item, i) => {
@@ -129,7 +135,7 @@ const Cards = (props) => {
                         <li className="list-inline-item">
                             <Card card={randomCard} theme={props.theme}></Card>
                         </li>
-                        : <p></p>}
+                        : <></>}
                 </ul>
             </div>
         </ThemeProvider>
