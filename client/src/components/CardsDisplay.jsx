@@ -7,7 +7,7 @@ import { createTheme, ThemeProvider } from '@mui/material';
 
 
 
-const Cards = (props) => {
+const CardsDisplay = (props) => {
 
     const [allCards, setAllCards] = useState(null);
     const [showCards, setShowCards] = useState(false);
@@ -151,4 +151,4 @@ const Cards = (props) => {
 }
 
 
-export default Cards;
+export default CardsDisplay;

@@ -1,19 +1,35 @@
 import logo from './logo.svg';
 import './App.css';
-import Cards from "./components/Cards";
+import CardsDisplay from "./components/CardsDisplay";
 import NavBar from "./components/Navbar";
 import Spread from "./components/Spread";
+import Register from "./components/Register";
+import Login from "./components/Login";
 import { BrowserRouter, Route, Router } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material';
+import { useEffect, useState } from 'react';
+import AuthService from './services/auth.service';
 
 
 function App() {
 
-  // const [selected, setSelected] = useState({});
-  
-  // const changeSelected = (card) => {
-  //   setSelected(card);
-  // }
+  const [showModeratorBoard, setShowModeratorBoard] = useState(false);
+  const [showAdminBoard, setShowAdminBoard] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const user = AuthService.getCurrentUser();
+    if (user) {
+      setCurrentUser(user);
+      setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"))
+      setShowAdminBoard(user.roles.includes("ROLE_ADMIN"))
+    }
+  }, [])
+
+  const logOut = () => {
+    AuthService.logout();
+  }
+
 
   const theme = createTheme({
     status: {
@@ -42,10 +58,13 @@ function App() {
       <NavBar theme={theme} />
       <BrowserRouter>
         <Route exact path="/cards">
-          <Cards theme={theme} />
+          <CardsDisplay theme={theme} />
         </Route>
         <Route exact path="/spreads">
-          <Spread theme={theme}/>
+          <Spread theme={theme} />
+        </Route>
+        <Route exact path="/register">
+          <Register theme={theme} />
         </Route>
       </BrowserRouter>
     </div>
