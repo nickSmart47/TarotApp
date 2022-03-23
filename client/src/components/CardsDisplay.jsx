@@ -13,30 +13,19 @@ const CardsDisplay = (props) => {
     const [showCards, setShowCards] = useState(false);
     const [randomCard, setRandomCard] = useState(null);
     const [showRandomCard, setShowRandomCard] = useState(false);
-
     const [searchTerm, setSearchTerm] = useState("");
-
     const [selected, setSelected] = useState(null);
-
     const [showSelected, setShowSelected] = useState(false);
-
-
     const [shuffled, setShuffled] = useState(false);
 
-    // const changeSelected = (card) => {
-    //     setSelected(card);
-    // }
 
     const getAllCards = () => {
         setSelected(null);
+        setShowRandomCard(false);
 
-        
-
-        // console.log('we got here')
-        
         if (!shuffled) {
             axios.get("/api/cards")
-            .then(response => {
+                .then(response => {
                     setAllCards(response.data);
                     // setShowCards(!showCards);
                     // console.log(allCards);
@@ -58,12 +47,11 @@ const CardsDisplay = (props) => {
         }
     }
 
-
     const getRandomCard = () => {
         if (showCards) {
             setShowCards(!showCards);
         }
-        else if (showSelected){
+        else if (showSelected) {
             setShowSelected(false);
         }
         axios.get("/api/cards/random")
@@ -103,7 +91,7 @@ const CardsDisplay = (props) => {
 
     const setSelectedCard = (card) => {
         setShowCards(!showCards);
-        setShowRandomCard(!showRandomCard)
+        setShowRandomCard(false)
         setShowSelected(true)
         setSelected(card);
         console.log('current selected card is', selected);
@@ -121,9 +109,9 @@ const CardsDisplay = (props) => {
                 </div>
                 <ul className="d-flex flex-wrap justify-content-center align-items-center gap-2">
                     {(selected && showSelected) ? <li className="list-inline-item">
-                            <Card card={selected} theme={props.theme}></Card>
-                        </li>
-                        : <></> }
+                        <Card card={selected} theme={props.theme}></Card>
+                    </li>
+                        : <></>}
                     {showCards ? allCards.filter((item, i) => {
                         return item.name.toLowerCase().includes(searchTerm.toLowerCase())
                     }).map((item, i) => {
