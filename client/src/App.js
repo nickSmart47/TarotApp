@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Router } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { useEffect, useState } from 'react';
 import AuthService from './services/auth.service';
+import { MuiThemeProvider } from '@material-ui/core';
 
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
 
 
   return (
+    <ThemeProvider theme = {theme}>
     <div className="App p-3">
       <NavBar theme={theme} />
       <BrowserRouter>
@@ -63,11 +65,15 @@ function App() {
         <Route exact path="/spreads">
           <Spread theme={theme} />
         </Route>
+        <Route exact path="/login">
+          <Login theme={theme} />
+        </Route>
         <Route exact path="/register">
           <Register theme={theme} />
         </Route>
       </BrowserRouter>
     </div>
+    </ThemeProvider>
   );
 }
 
