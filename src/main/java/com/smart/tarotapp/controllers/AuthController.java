@@ -29,9 +29,9 @@ import com.smart.tarotapp.repositories.UserRepository;
 import com.smart.tarotapp.security.jwt.JwtUtils;
 import com.smart.tarotapp.security.services.UserDetailsImpl;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "*")
 public class AuthController {
   @Autowired
   AuthenticationManager authenticationManager;

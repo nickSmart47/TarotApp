@@ -10,7 +10,7 @@
 <!-- for rendering errors on PUT routes -->
 <%@ page isErrorPage="true"%>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="https://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Tarot</title>
@@ -23,9 +23,7 @@
 
 </head>
 <body>
-	<div class="container">
-		<!-- Beginning of Container -->
-
+	<div class="react">
 	</div>
 	<!-- End of Container -->
 </body>
