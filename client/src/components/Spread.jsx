@@ -55,16 +55,12 @@ const Spread = props => {
     }
 
     const generateSpread = (numCards) => {
-        // console.log(numCards, typeof(parseInt(numCards)))
-        // setCardsInSpread([]);
-        // console.log("number going into for loop is", numCards)
         for (let i = 0; i < numCards; i++) {
             axios.get("/api/cards/random")
                 .then(response => {
                     setCardsInSpread(cardsInSpread => [...cardsInSpread, response.data]);
                 })
         }
-        // console.log(cardsInSpread);
         setShowSpread(true);
     }
 
