@@ -29,9 +29,9 @@ import com.smart.tarotapp.repositories.UserRepository;
 import com.smart.tarotapp.security.jwt.JwtUtils;
 import com.smart.tarotapp.security.services.UserDetailsImpl;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*")
 public class AuthController {
   @Autowired
   AuthenticationManager authenticationManager;
@@ -44,6 +44,7 @@ public class AuthController {
   @Autowired
   JwtUtils jwtUtils;
 
+  @CrossOrigin(origins = "http://localhost:8081/")
   @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
     Authentication authentication =
