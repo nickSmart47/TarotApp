@@ -11,6 +11,8 @@ const Spread = props => {
     const [numCards, setNumCards] = useState(0);
     const [showSpread, setShowSpread] = useState(false);
     const [notes, setNotes] = useState("");
+    let [currentCard, setCurrentCard] = useState(null);
+
 
 
     const saveSpread = (e) => {
@@ -29,10 +31,10 @@ const Spread = props => {
                 console.log("response after post request --->", res)
 
                 if (res.data.errors) {
-                    console.log('we got errors bro', res.data.errors)
+                    console.log('errors here --->', res.data.errors)
                 }
                 else {
-                    console.log("success dude!")
+                    console.log("success!")
                 }
             })
             .catch(err => {
@@ -46,7 +48,6 @@ const Spread = props => {
     }
 
     const handleSpreadButton = () => {
-        console.log(numCards)
         if (cardsInSpread != []) {
             setCardsInSpread([]);
         }
@@ -57,11 +58,24 @@ const Spread = props => {
     const generateSpread = (numCards) => {
         for (let i = 0; i < numCards; i++) {
             axios.get("/api/cards/random")
-                .then(response => {
+                .then((response) => {
+                    // console.log(response.data)
+                    if (response.data in cardsInSpread){
+                        console.log('new card is a duplicate')
+                    }
+                    while (response.data in cardsInSpread) {
+                        console.log('inside while loop');
+                        axios.get("/api/cards/random")
+                        .then(response => {setCurrentCard(response.data)})
+                    }
                     setCardsInSpread(cardsInSpread => [...cardsInSpread, response.data]);
                 })
         }
         setShowSpread(true);
+    }
+
+    const drawCard = () => {
+
     }
 
     return (
@@ -82,7 +96,7 @@ const Spread = props => {
                     <div className="">
                         {showSpread ?
                             <div className="d-flex flex-column gap-3">
-                                <TextField label="Enter your notes" multiline rows={5} maxRows={8} color="secondary" onChange={(e) => setNotes(e.target.value)} type="textarea" name="notes" id="" placeholder="Enter your notes here" />
+                                <TextField label="Enter your notes" multiline rows={5} color="secondary" onChange={(e) => setNotes(e.target.value)} type="textarea" name="notes" id="" placeholder="Enter your notes here" />
                                 <Button
                                     variant="contained"
                                     color="secondary"

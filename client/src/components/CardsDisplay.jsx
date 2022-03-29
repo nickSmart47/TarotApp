@@ -58,7 +58,6 @@ const CardsDisplay = (props) => {
             .then(response => {
                 setRandomCard(response.data);
                 if (!showRandomCard) {
-
                     setShowRandomCard(true);
                 }
                 console.log(randomCard);
