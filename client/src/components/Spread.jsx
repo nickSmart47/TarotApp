@@ -11,7 +11,8 @@ const Spread = props => {
     const [numCards, setNumCards] = useState(0);
     const [showSpread, setShowSpread] = useState(false);
     const [notes, setNotes] = useState("");
-    let [currentCard, setCurrentCard] = useState(null);
+
+    const [currentCard, setCurrentCard] = useState(null);
 
 
 
@@ -59,14 +60,14 @@ const Spread = props => {
         for (let i = 0; i < numCards; i++) {
             axios.get("/api/cards/random")
                 .then((response) => {
-                    // console.log(response.data)
-                    if (response.data in cardsInSpread){
+                    console.log(cardsInSpread)
+                    if (response.data in cardsInSpread) {
                         console.log('new card is a duplicate')
                     }
                     while (response.data in cardsInSpread) {
                         console.log('inside while loop');
                         axios.get("/api/cards/random")
-                        .then(response => {setCurrentCard(response.data)})
+                            .then(response => { setCurrentCard(response.data) })
                     }
                     setCardsInSpread(cardsInSpread => [...cardsInSpread, response.data]);
                 })
@@ -76,6 +77,10 @@ const Spread = props => {
 
     const drawCard = () => {
 
+        axios.get("/api/cards/random")
+            .then(response => {
+                return response.data;
+            })
     }
 
     return (
