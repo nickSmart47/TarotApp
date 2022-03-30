@@ -38,7 +38,7 @@ public class CardService {
 	}
 
 	public Card getRandomCard() {
-		Long randomIdNumber = (long) (Math.random() * (78 - 1) + 1);
+		Long randomIdNumber = (long) (Math.random() * (5 - 1) + 1);
 
 		double randomOrientation = Math.random();
 		boolean orientation;

@@ -58,29 +58,34 @@ const Spread = props => {
 
     const generateSpread = (numCards) => {
         for (let i = 0; i < numCards; i++) {
-            axios.get("/api/cards/random")
-                .then((response) => {
-                    console.log(cardsInSpread)
-                    if (response.data in cardsInSpread) {
-                        console.log('new card is a duplicate')
-                    }
-                    while (response.data in cardsInSpread) {
-                        console.log('inside while loop');
-                        axios.get("/api/cards/random")
-                            .then(response => { setCurrentCard(response.data) })
-                    }
-                    setCardsInSpread(cardsInSpread => [...cardsInSpread, response.data]);
-                })
+            setCurrentCard(drawCard());
         }
+        // setCardsInSpread(cardsInSpread => [...cardsInSpread, currentCard]);
         setShowSpread(true);
     }
 
     const drawCard = () => {
-
+        let newCard;
         axios.get("/api/cards/random")
             .then(response => {
-                return response.data;
+                newCard = response.data;
+                // console.log(newCard)
+                setCurrentCard(response.data);
+
             })
+            .then(() => {
+                console.log('new card is', newCard);
+                console.log('current cards in spread are', cardsInSpread)
+                if (cardsInSpread.includes(newCard)) {
+                    console.log('duplicate card found');
+                }
+            })
+            .then(() => {
+                setCardsInSpread(cardsInSpread => [...cardsInSpread, newCard]);
+
+            })
+            // setCardsInSpread(cardsInSpread => [...cardsInSpread, response.data]);
+            .catch(err => console.log('error on draw card', err));
     }
 
     return (
