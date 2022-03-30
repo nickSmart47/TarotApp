@@ -27,8 +27,6 @@ const CardsDisplay = (props) => {
             axios.get("/api/cards")
                 .then(response => {
                     setAllCards(response.data);
-                    // setShowCards(!showCards);
-                    // console.log(allCards);
                     if (!showCards) {
                         setShowCards(true);
                     }
@@ -38,8 +36,6 @@ const CardsDisplay = (props) => {
             axios.get("/api/cards/shuffled")
                 .then(response => {
                     setAllCards(response.data);
-                    // setShowCards(!showCards);
-                    // console.log(allCards);
                     if (!showCards) {
                         setShowCards(true);
                     }
