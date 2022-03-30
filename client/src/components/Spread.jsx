@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Card from './Card';
 import { TextField, ThemeProvider, Theme, Button } from '@mui/material';
@@ -14,6 +14,31 @@ const Spread = props => {
 
     const [currentCard, setCurrentCard] = useState(null);
 
+    const [count, setCount] = useState(0);
+
+    const [newSpread, setNewSpread] = useState(false);
+
+    useEffect(() => {
+        if (count === 0) {
+            // console.log('inside use effect, count is', count);
+        }
+        else {
+            console.log({ cardsInSpread }, { currentCard });
+            if (cardsInSpread.some(element => {
+                if (element.id === currentCard.id) {
+                    console.log('current card is a duplicate', currentCard.name);
+                    return true;
+                }
+            })) {
+                setCount(count => count - 1);
+                drawCard();
+            }
+            else setCardsInSpread(cardsInSpread => [...cardsInSpread, currentCard]);
+            // console.log('inside use effect, count is', count);
+            // console.log('new card is', currentCard);
+        }
+        // console.log('cards in spread are', cardsInSpread);
+    }, [count, newSpread]);
 
 
     const saveSpread = (e) => {
@@ -49,8 +74,12 @@ const Spread = props => {
     }
 
     const handleSpreadButton = () => {
+        setNewSpread(!newSpread);
         if (cardsInSpread != []) {
             setCardsInSpread([]);
+        }
+        if (count > 0) {
+            setCount(0);
         }
         let numCardsAsInt = parseInt(numCards)
         generateSpread(numCardsAsInt)
@@ -58,35 +87,47 @@ const Spread = props => {
 
     const generateSpread = (numCards) => {
         for (let i = 0; i < numCards; i++) {
-            setCurrentCard(drawCard());
+            drawCard();
         }
         // setCardsInSpread(cardsInSpread => [...cardsInSpread, currentCard]);
         setShowSpread(true);
     }
 
     const drawCard = () => {
-        let newCard;
         axios.get("/api/cards/random")
             .then(response => {
-                newCard = response.data;
-                // console.log(newCard)
-                setCurrentCard(response.data);
+                let card = (response.data)
+                setCurrentCard(card);
 
             })
             .then(() => {
-                console.log('new card is', newCard);
-                console.log('current cards in spread are', cardsInSpread)
-                if (cardsInSpread.includes(newCard)) {
-                    console.log('duplicate card found');
-                }
-            })
-            .then(() => {
-                setCardsInSpread(cardsInSpread => [...cardsInSpread, newCard]);
-
-            })
-            // setCardsInSpread(cardsInSpread => [...cardsInSpread, response.data]);
-            .catch(err => console.log('error on draw card', err));
+                setCount(count => count + 1);
+            }
+            )
     }
+    // const drawCard = () => {
+    //     let newCard;
+    //     axios.get("/api/cards/random")
+    //         .then(response => {
+    //             newCard = response.data;
+    //             // console.log(newCard)
+    //             setCurrentCard(response.data);
+
+    //         })
+    //         .then(() => {
+    //             console.log('new card is', newCard);
+    //             console.log('current cards in spread are', cardsInSpread)
+    //             if (cardsInSpread.includes(newCard)) {
+    //                 console.log('duplicate card found');
+    //             }
+    //         })
+    //         .then(() => {
+    //             setCardsInSpread(cardsInSpread => [...cardsInSpread, newCard]);
+
+    //         })
+    //         // setCardsInSpread(cardsInSpread => [...cardsInSpread, response.data]);
+    //         .catch(err => console.log('error on draw card', err));
+    // }
 
     return (
         <ThemeProvider theme={props.theme}>
