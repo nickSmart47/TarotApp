@@ -17,6 +17,8 @@ const Spread = props => {
 
     const [newSpread, setNewSpread] = useState(false);
 
+    const [allowReversals, setAllowReversals] = useState(false);
+
     useEffect(() => {
         if (count === 0) {
         }
@@ -86,16 +88,30 @@ const Spread = props => {
     }
 
     const drawCard = () => {
-        axios.get("/api/cards/random")
-            .then(response => {
-                let card = (response.data)
-                setCurrentCard(card);
-
-            })
-            .then(() => {
-                setCount(count => count + 1);
-            }
-            )
+        if(allowReversals){
+            axios.get("/api/cards/random")
+                .then(response => {
+                    let card = (response.data)
+                    setCurrentCard(card);
+    
+                })
+                .then(() => {
+                    setCount(count => count + 1);
+                }
+                )
+        }
+        else{
+            axios.get("/api/cards/random/upright")
+                .then(response => {
+                    let card = (response.data)
+                    setCurrentCard(card);
+    
+                })
+                .then(() => {
+                    setCount(count => count + 1);
+                }
+                )
+        }
     }
 
     return (
