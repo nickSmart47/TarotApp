@@ -29,6 +29,12 @@ public class CardApi {
 	
 	@GetMapping("/cards/random")
 	public Card randomCard() {
-		return cardServ.getRandomCard();
+		return cardServ.getRandomCard(true);
 	}
+
+	@GetMapping("/cards/random/upright")
+	public Card randomCardUpright() {
+		return cardServ.getRandomCard(false);
+	}
+
 }
