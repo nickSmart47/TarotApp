@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Card from './Card';
-import { TextField, ThemeProvider, Button } from '@mui/material';
+import { TextField, ThemeProvider, Button, Checkbox, FormControlLabel } from '@mui/material';
 import axios from 'axios';
 
 const Spread = props => {
@@ -27,7 +27,7 @@ const Spread = props => {
                 if (element.id === currentCard.id) {
                     console.log('current card is a duplicate', currentCard.name);
                     return true;
-                } 
+                }
             })) {
                 drawCard();
             }
@@ -87,25 +87,35 @@ const Spread = props => {
         setShowSpread(true);
     }
 
+    const handleAllowReversals = (e) => {
+        // e.preventDefault();
+        if (e.target.checked) setAllowReversals(true);
+        else setAllowReversals(false);
+        console.log({allowReversals})
+    }
+
+    const handleCheck = () => {
+        setAllowReversals(true);
+    }
     const drawCard = () => {
-        if(allowReversals){
+        if (allowReversals) {
             axios.get("/api/cards/random")
                 .then(response => {
                     let card = (response.data)
                     setCurrentCard(card);
-    
+
                 })
                 .then(() => {
                     setCount(count => count + 1);
                 }
                 )
         }
-        else{
+        else {
             axios.get("/api/cards/random/upright")
                 .then(response => {
                     let card = (response.data)
                     setCurrentCard(card);
-    
+
                 })
                 .then(() => {
                     setCount(count => count + 1);
@@ -122,6 +132,9 @@ const Spread = props => {
                     <div className="d-flex gap-3 align-items-center justify-content-center mt-3 flex-column">
                         <TextField label="Set your intention" color="secondary" onChange={(e) => setIntention(e.target.value)} type="text" name="intention" id="" placeholder="Set your intention" />
                         <TextField label="Number of Cards" color="secondary" onChange={(e) => handleNumCards(e)} type="number" name="intention" id="" placeholder="Number of Cards" />
+                        <FormControlLabel control={<Checkbox
+                            onChange={handleAllowReversals}
+                        />} label="Allow Reversals?" />
                         <Button
                             variant="contained"
                             color="secondary"
