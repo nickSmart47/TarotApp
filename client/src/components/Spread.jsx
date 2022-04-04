@@ -88,15 +88,11 @@ const Spread = props => {
     }
 
     const handleAllowReversals = (e) => {
-        // e.preventDefault();
         if (e.target.checked) setAllowReversals(true);
         else setAllowReversals(false);
-        console.log({allowReversals})
+        console.log({ allowReversals })
     }
 
-    const handleCheck = () => {
-        setAllowReversals(true);
-    }
     const drawCard = () => {
         if (allowReversals) {
             axios.get("/api/cards/random")
@@ -170,7 +166,7 @@ const Spread = props => {
 
 
                 </ul>
-
+                    
             </div>
         </ThemeProvider>
     )

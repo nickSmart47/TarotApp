@@ -45,12 +45,18 @@ function App() {
       },
     },
     components: {
-      Accordion: {
+      accordion: {
         primary: {
           main: '#ba68c8',
         },
+      },
+      button: {
+        fontFamily: [
+          'Dancing Script',
+          'cursive'
+        ].join(','),
       }
-    }
+    },
   });
 
 

@@ -22,7 +22,7 @@ const CardsDisplay = (props) => {
     const getAllCards = () => {
         setSelected(null);
         setShowRandomCard(false);
-
+        console.log(props.theme)
         if (!shuffled) {
             axios.get("/api/cards")
                 .then(response => {
@@ -50,13 +50,12 @@ const CardsDisplay = (props) => {
         else if (showSelected) {
             setShowSelected(false);
         }
-        axios.get("/api/cards/random")
+        axios.get("/api/cards/random/upright")
             .then(response => {
                 setRandomCard(response.data);
                 if (!showRandomCard) {
                     setShowRandomCard(true);
                 }
-                console.log(randomCard);
             })
     }
 
@@ -86,24 +85,24 @@ const CardsDisplay = (props) => {
 
     const setSelectedCard = (card) => {
         setShowCards(!showCards);
-        setShowRandomCard(false)
+        // setShowRandomCard(false)
         setShowSelected(true)
         setSelected(card);
-        console.log('current selected card is', selected);
+        // console.log('current selected card is', selected);
     }
 
     return (
         <ThemeProvider theme={props.theme}>
             <div>
-                <h1>Tarot Cards</h1>
-                <div className="d-flex gap-3 justify-content-center">
+                <h1 className = "mt-3">Tarot Cards</h1>
+                <div className="d-flex gap-3 justify-content-center mt-3">
                     <Button variant="contained" color="secondary" onClick={allCardsClickHandler}>All Cards</Button>
                     <Button variant="contained" color="secondary" onClick={shuffleCards}>Shuffle Cards</Button>
                     <Button variant="contained" color="secondary" onClick={getRandomCard}>Draw Card</Button>
                     <TextField label="Search for a card" color="secondary" onChange={(e) => handleSearch(e)} type="text" name="search" id="" placeholder="Search for a Card" />
                 </div>
                 <ul className="d-flex flex-wrap justify-content-center align-items-center gap-2">
-                    {(selected && showSelected) ? <li className="list-inline-item">
+                    {(selected && showSelected && !showCards) ? <li className="list-inline-item">
                         <Card card={selected} theme={props.theme}></Card>
                     </li>
                         : <></>}
