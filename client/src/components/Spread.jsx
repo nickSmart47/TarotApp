@@ -142,12 +142,12 @@ const Spread = props => {
                         {showSpread ?
                             <div className="d-flex flex-column gap-3">
                                 <TextField label="Enter your notes" multiline rows={5} color="secondary" onChange={(e) => setNotes(e.target.value)} type="textarea" name="notes" id="" placeholder="Enter your notes here" />
-                                <Button
+                                {/* <Button
                                     variant="contained"
                                     color="secondary"
                                     onClick={saveSpread}>
                                     Save Spread
-                                </Button>
+                                </Button> */}
                             </div>
                             : <></>}
                     </div>
