@@ -22,7 +22,7 @@ const CardsDisplay = (props) => {
     const getAllCards = () => {
         setSelected(null);
         setShowRandomCard(false);
-        console.log(props.theme)
+        // console.log(props.theme)
         if (!shuffled) {
             axios.get("/api/cards")
                 .then(response => {
