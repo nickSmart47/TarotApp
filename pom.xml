@@ -11,12 +11,13 @@
     </parent>
     <groupId>com.smart.tarotapp</groupId>
     <artifactId>TarotApp</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>TarotApp</name>
     <description>Tarot Card Description App</description>
     <properties>
         <java.version>11</java.version>
+        <frontend-src-dir>${project.basedir}/client</frontend-src-dir>
     </properties>
     <dependencies>
         <!--Basics (for general web dev) -->
@@ -122,8 +123,8 @@
                 <version>1.12.1</version>
 
                 <configuration>
-                    <workingDirectory>client</workingDirectory>
-                    <installDirectory>target</installDirectory>
+                    <workingDirectory>${frontend-src-dir}</workingDirectory>
+                    <installDirectory>${project.build.directory}</installDirectory>
                 </configuration>
 
                 <executions>
@@ -205,10 +206,10 @@
                         </goals>
                         <phase>prepare-package</phase>
                         <configuration>
-                            <outputDirectory>target/static</outputDirectory>
+                            <outputDirectory>${project.build.outputDirectory}/static</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>client/build</directory>
+                                    <directory>${frontend-src-dir}/build</directory>
                                     <filtering>false</filtering>
                                 </resource>
                             </resources>
