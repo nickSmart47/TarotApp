@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Card from './Card';
-import { TextField, ThemeProvider, Button, Checkbox, FormControlLabel } from '@mui/material';
+import CardDetails from './CardDetails';
+import { TextField, ThemeProvider, Button, Checkbox, FormControlLabel, Grid } from '@mui/material';
 import axios from 'axios';
 
 const Spread = props => {
@@ -11,6 +12,7 @@ const Spread = props => {
     const [showSpread, setShowSpread] = useState(false);
     const [notes, setNotes] = useState("");
 
+    const [selected, setSelected] = useState(null);
     const [currentCard, setCurrentCard] = useState(null);
 
     const [count, setCount] = useState(0);
@@ -152,21 +154,35 @@ const Spread = props => {
                             : <></>}
                     </div>
                 </div>
-                <ul className="d-flex justify-content-center align-items-center flex-wrap ">
+                <Grid
+                    className="d-flex justify-content-center align-items-center flex-wrap "
+                    container
+                    direction="row"
+                    justifyContent="start"
+                    alignItems="start"
+                    wrap="wrap"
+                >
                     {showSpread ? cardsInSpread.map((item, i) => {
                         return (
                             <>
-                                <li className="list-inline-item" key={i}>
-                                    <Card card={item} theme={props.theme}></Card>
-                                </li>
+                                <Grid item xs={12} md={4} className="Gridst-inline-item" key={i}>
+                                    <Card
+                                        card={item}
+                                        theme={props.theme}
+                                        selected={selected}
+                                        setSelected={setSelected}
+                                    >
+                                    </Card>
+                                    {selected == item ?
+                                        <CardDetails card={item} theme={props.theme} />
+                                        : <></>}
+                                </Grid>
                             </>
                         )
                     })
-                        : <p></p>}
+                        : <></>}
+                </Grid>
 
-
-                </ul>
-                    
             </div>
         </ThemeProvider>
     )
