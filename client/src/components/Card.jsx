@@ -11,21 +11,29 @@ const Card = props => {
 
   const [showDetails, setShowDetails] = useState(false);
 
+  const {selected, setSelected} = props;
+  const {previousClickedItemPos, setPreviousClickedItemPos} = props;
+
+  const {handleClickList} = props;
 
   const handleClick = () => {
     setShowDetails(!showDetails);
-    props.setSelected(props.card)
+    if (selected == props.card){
+      setSelected(null)
+    } else setSelected(props.card);
+    
+    // handleClickList(e.target.offsetTop);
   }
 
 
   if (props.card) {
     return (
       <ThemeProvider theme={props.theme}>
-        <Grid
+        <Grid className= "mt-3"
           container
           direction="row"
-          justifyContent="center"
-          alignItems="stretch"
+          justifyContent="start"
+          alignItems="start"
           wrap = "wrap"
           >
           <Grid item xs={12} md = {12} className="d-flex flex-column">
@@ -34,9 +42,10 @@ const Card = props => {
               <img src={`./images/Cards/${props.card.nameShort}.png`} className={props.card.upright ? "upright card-image" : "reversed card-image"}></img>
             </Button>
           </Grid>
-          {showDetails ? 
+          {/* {showDetails ? <Grid item xs={5}md={6}>
             <CardDetails card={props.card} theme={props.theme} />
-            : <></>}
+          </Grid>
+            : <></>} */}
         </Grid>
       </ThemeProvider>
     )

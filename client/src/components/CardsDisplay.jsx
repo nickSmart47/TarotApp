@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import Card from './Card';
+import CardDetails from './CardDetails';
 import { Button, TextField } from '@mui/material';
 import { ThemeProvider, Grid } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 
 
 
@@ -10,13 +12,43 @@ import { ThemeProvider, Grid } from '@mui/material';
 const CardsDisplay = (props) => {
 
     const [allCards, setAllCards] = useState(null);
+    const [showDetails, setShowDetails] = useState(false);
     const [showCards, setShowCards] = useState(false);
-    const [randomCard, setRandomCard] = useState(null);
+    const [randomCard, setRandomCard] = useState(false);
     const [showRandomCard, setShowRandomCard] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [selected, setSelected] = useState(null);
     const [showSelected, setShowSelected] = useState(false);
     const [shuffled, setShuffled] = useState(false);
+
+    const [previousClickedItemPos, setPreviousClickedItemPos] = useState(0);
+
+    /* import useLocation so that useEffect can be invoked on-route-change */
+    const location = useLocation();
+
+    /* basically pass this to the list items so you can update position on-click */
+    function handleClickList(element) {
+        console.log('here, offset is', element)
+        setPreviousClickedItemPos(element);
+    }
+
+    // useEffect(() => {
+    //     /* scroll to the element previously selected */
+    //     // console.log('inside use effect, selected is', selected)
+    //     window.scrollTo(0, previousClickedItemPos);
+    // }, [previousClickedItemPos, location, selected]);
+
+    useEffect(() => {
+        if (selected) {
+            console.log('selectin')
+            console.log(selected)
+            setShowCards(false);
+            setRandomCard(selected);
+            setShowRandomCard(true)
+        }
+    }, [selected])
+
+  
 
 
     const getAllCards = () => {
@@ -82,17 +114,8 @@ const CardsDisplay = (props) => {
         setSearchTerm(e.target.value)
     }
 
-    const handleCardClick = (e) => {
-        e.preventDefault();
-        console.log(e.target.value);
-        // setShowCards(!showCards);
-        // setShowSelected(true)
-        // setSelected(card);
-    }
 
-    const setSelectedCard = () => {
-        
-    }
+
 
     return (
         <ThemeProvider theme={props.theme}>
@@ -103,9 +126,12 @@ const CardsDisplay = (props) => {
                     <Button variant="contained" color="secondary" onClick={getRandomCard}>Draw Card</Button>
                     <TextField label="Search for a card" color="secondary" onChange={(e) => handleSearch(e)} type="text" name="search" id="" placeholder="Search for a Card" />
                 </div>
-                <Grid container spacing={{ xs: 2, sm: 2, md: 3 }}
-                    alignItems = "center"
-                    wrap = "wrap">
+                <Grid container
+                    spacing={{ xs: 2, sm: 2, md: 3 }}
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                >
                     {(selected && showSelected && !showCards) ? <li className="list-inline-item">
                         <Card card={selected} theme={props.theme}></Card>
                     </li>
@@ -114,23 +140,44 @@ const CardsDisplay = (props) => {
                         return item.name.toLowerCase().includes(searchTerm.toLowerCase())
                     }).map((item, i) => {
                         return (
-                            <Grid item xs={6} sm={4} md={3} key={i}>
-                                <Card card={item}
-                                    selected={selected}
-                                    setSelected={setSelectedCard}
-                                    setShowCards={setShowCards}
-                                    theme={props.theme}
-                                    onClick = {handleCardClick}
+                            <>
+                                <Grid item xs={selected == item && !showRandomCard ? 6 : 4} sm={4} md={selected == item ? 4 : 4} key={i}>
+                                    <Card card={item}
+                                        selected={selected}
+                                        setSelected={setSelected}
+                                        setShowCards={setShowCards}
+                                        previousClickedItemPos={previousClickedItemPos}
+                                        setPreviousClickedItemPos={setPreviousClickedItemPos}
+                                        theme={props.theme}
+                                        handleClickList={handleClickList}
+                                        showDetails={showDetails}
+                                        setShowDetails={setShowDetails}
                                     >
-                                </Card>
-                            </Grid>
+                                    </Card>
+                                </Grid>
+                                {selected == item ?
+                                    <Grid item xs={6} md={8}>
+                                        <CardDetails card={item} theme={props.theme} />
+                                    </Grid>
+                                    : <></>}
+                            </>
                         )
                     })
                         : <></>}
                     {showRandomCard ?
-                        <Grid item xs ={12}>
-                            <Card card={randomCard} theme={props.theme}></Card>
-                        </Grid>
+                        <>
+                            <Grid item xs={12}>
+                                <Card
+                                    card={randomCard}
+                                    theme={props.theme}
+                                    selected={selected}
+                                    setSelected={setSelected}
+                                ></Card>
+                            </Grid>
+                            <Grid item xs={12} md={8}>
+                                <CardDetails card={randomCard} theme={props.theme} />
+                            </Grid>
+                        </>
                         : <></>}
                 </Grid>
             </div>
