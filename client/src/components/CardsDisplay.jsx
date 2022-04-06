@@ -166,7 +166,7 @@ const CardsDisplay = (props) => {
                         : <></>}
                     {showRandomCard ?
                         <>
-                            <Grid item xs={12}>
+                            <Grid item xs={5} md={4}>
                                 <Card
                                     card={randomCard}
                                     theme={props.theme}
@@ -174,9 +174,11 @@ const CardsDisplay = (props) => {
                                     setSelected={setSelected}
                                 ></Card>
                             </Grid>
-                            <Grid item xs={12} md={8}>
+                            {selected == randomCard ?
+                            <Grid item xs={7} md={8}>
                                 <CardDetails card={randomCard} theme={props.theme} />
                             </Grid>
+                            : <></>}
                         </>
                         : <></>}
                 </Grid>
