@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import Card from './Card';
 import { Button, TextField } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material';
+import { ThemeProvider, Grid } from '@mui/material';
 
 
 
@@ -22,7 +22,6 @@ const CardsDisplay = (props) => {
     const getAllCards = () => {
         setSelected(null);
         setShowRandomCard(false);
-        // console.log(props.theme)
         if (!shuffled) {
             axios.get("/api/cards")
                 .then(response => {
@@ -83,25 +82,30 @@ const CardsDisplay = (props) => {
         setSearchTerm(e.target.value)
     }
 
-    const setSelectedCard = (card) => {
-        setShowCards(!showCards);
-        // setShowRandomCard(false)
-        setShowSelected(true)
-        setSelected(card);
-        // console.log('current selected card is', selected);
+    const handleCardClick = (e) => {
+        e.preventDefault();
+        console.log(e.target.value);
+        // setShowCards(!showCards);
+        // setShowSelected(true)
+        // setSelected(card);
+    }
+
+    const setSelectedCard = () => {
+        
     }
 
     return (
         <ThemeProvider theme={props.theme}>
             <div>
-                <h1 className = "mt-3">Tarot Cards</h1>
                 <div className="d-flex gap-3 justify-content-center mt-3">
                     <Button variant="contained" color="secondary" onClick={allCardsClickHandler}>All Cards</Button>
                     <Button variant="contained" color="secondary" onClick={shuffleCards}>Shuffle Cards</Button>
                     <Button variant="contained" color="secondary" onClick={getRandomCard}>Draw Card</Button>
                     <TextField label="Search for a card" color="secondary" onChange={(e) => handleSearch(e)} type="text" name="search" id="" placeholder="Search for a Card" />
                 </div>
-                <ul className="d-flex flex-wrap justify-content-center align-items-center gap-2">
+                <Grid container spacing={{ xs: 2, sm: 2, md: 3 }}
+                    alignItems = "center"
+                    wrap = "wrap">
                     {(selected && showSelected && !showCards) ? <li className="list-inline-item">
                         <Card card={selected} theme={props.theme}></Card>
                     </li>
@@ -110,23 +114,25 @@ const CardsDisplay = (props) => {
                         return item.name.toLowerCase().includes(searchTerm.toLowerCase())
                     }).map((item, i) => {
                         return (
-                            <li className="list-unstyled" key={i}>
+                            <Grid item xs={6} sm={4} md={3} key={i}>
                                 <Card card={item}
                                     selected={selected}
                                     setSelected={setSelectedCard}
                                     setShowCards={setShowCards}
-                                    theme={props.theme}>
+                                    theme={props.theme}
+                                    onClick = {handleCardClick}
+                                    >
                                 </Card>
-                            </li>
+                            </Grid>
                         )
                     })
-                        : <p></p>}
-                    {showRandomCard ?
-                        <li className="list-inline-item">
-                            <Card card={randomCard} theme={props.theme}></Card>
-                        </li>
                         : <></>}
-                </ul>
+                    {showRandomCard ?
+                        <Grid item xs ={12}>
+                            <Card card={randomCard} theme={props.theme}></Card>
+                        </Grid>
+                        : <></>}
+                </Grid>
             </div>
         </ThemeProvider>
     )
