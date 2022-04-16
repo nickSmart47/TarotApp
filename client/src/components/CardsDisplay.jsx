@@ -32,12 +32,6 @@ const CardsDisplay = (props) => {
         setPreviousClickedItemPos(element);
     }
 
-    // useEffect(() => {
-    //     /* scroll to the element previously selected */
-    //     // console.log('inside use effect, selected is', selected)
-    //     window.scrollTo(0, previousClickedItemPos);
-    // }, [previousClickedItemPos, location, selected]);
-
     useEffect(() => {
         if (selected) {
             console.log('selectin')
