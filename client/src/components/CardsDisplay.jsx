@@ -30,23 +30,20 @@ const CardsDisplay = (props) => {
 
   useEffect(() => {
     if (selected) {
-      setShowCards(false);
-      setRandomCard(selected);
-      setShowRandomCard(true);
     }
-  }, [selected]);
+}, [selected]);
 
-  
+
   const getAllCards = () => {
     setSelected(null);
     setShowRandomCard(false);
     if (!shuffled) {
-        axios.get("/api/cards").then((response) => {
+      axios.get("/api/cards").then((response) => {
         setAllCards(response.data);
         if (!showCards) {
-            setShowCards(true);
+          setShowCards(true);
         }
-    });
+      });
     } else {
       axios.get("/api/cards/shuffled").then((response) => {
         setAllCards(response.data);
@@ -55,11 +52,11 @@ const CardsDisplay = (props) => {
         }
       });
     }
-};
+  };
 
-useEffect(() => {
-  getAllCards();
-}, []);
+  useEffect(() => {
+    getAllCards();
+  }, []);
   const getRandomCard = () => {
     if (showCards) {
       setShowCards(!showCards);
@@ -128,7 +125,7 @@ useEffect(() => {
         <Grid
           container
           spacing={{ xs: 2, sm: 2, md: 3 }}
-          direction="row"
+          //   direction="row"
           justifyContent="center"
           alignItems="center"
         >
@@ -151,9 +148,10 @@ useEffect(() => {
                   <>
                     <Grid
                       item
-                      xs={selected == item && !showRandomCard ? 6 : 4}
+                      xs={item && item == selected ?  12 : 4}
                       sm={4}
-                      md={selected == item ? 4 : 4}
+                      md={4}
+                      lg={item && item == selected ? 12 :3}
                       key={i}
                     >
                       <Card
@@ -184,7 +182,7 @@ useEffect(() => {
           )}
           {showRandomCard ? (
             <>
-              <Grid item xs={5} md={4}>
+              <Grid item xs={12} md={12}>
                 <Card
                   card={randomCard}
                   theme={props.theme}
