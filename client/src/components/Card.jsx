@@ -22,7 +22,6 @@ const Card = props => {
       setSelected(null)
     } else setSelected(props.card);
     
-    // handleClickList(e.target.offsetTop);
   }
 
 
