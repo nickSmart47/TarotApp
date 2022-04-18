@@ -169,13 +169,13 @@ useEffect(() => {
                         setShowDetails={setShowDetails}
                       ></Card>
                     </Grid>
-                    {selected == item ? (
+                    {/* {selected == item ? (
                       <Grid item xs={6} md={8}>
                         <CardDetails card={item} theme={props.theme} />
                       </Grid>
                     ) : (
                       <></>
-                    )}
+                    )} */}
                   </>
                 );
               })
@@ -192,13 +192,13 @@ useEffect(() => {
                   setSelected={setSelected}
                 ></Card>
               </Grid>
-              {selected == randomCard ? (
+              {/* {selected == randomCard ? (
                 <Grid item xs={7} md={8}>
                   <CardDetails card={randomCard} theme={props.theme} />
                 </Grid>
               ) : (
                 <></>
-              )}
+              )} */}
             </>
           ) : (
             <></>

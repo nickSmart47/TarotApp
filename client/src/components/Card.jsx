@@ -31,20 +31,20 @@ const Card = props => {
         <Grid className= "mt-3"
           container
           direction="row"
-          justifyContent="start"
-          alignItems="start"
+          justifyContent="center"
+          alignItems="center"
           wrap = "wrap"
           >
-          <Grid item xs={12} md = {12} className="d-flex flex-column">
+          <Grid item xs={12} md = {6} className="d-flex flex-column">
             <h3 className="d-flex justify-content-center align-items-center">{props.card.name} </h3>
             <Button onClick={handleClick}>
               <img src={`./images/Cards/${props.card.nameShort}.png`} className={props.card.upright ? "upright card-image" : "reversed card-image"}></img>
             </Button>
           </Grid>
-          {/* {showDetails ? <Grid item xs={5}md={6}>
+          {showDetails ? <Grid item xs={5}md={6}>
             <CardDetails card={props.card} theme={props.theme} />
           </Grid>
-            : <></>} */}
+            : <></>}
         </Grid>
       </ThemeProvider>
     )
