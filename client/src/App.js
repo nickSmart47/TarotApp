@@ -47,7 +47,7 @@ function App() {
     <div className="App p-3">
       <NavBar theme={theme} />
       <BrowserRouter>
-        <Route exact path="/cards">
+        <Route exact path={["/cards", "/"]}>
           <CardsDisplay theme={theme} />
         </Route>
         <Route exact path="/spreads">
