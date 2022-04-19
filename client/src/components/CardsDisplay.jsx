@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Card from "./Card";
 import CardDetails from "./CardDetails";
@@ -28,10 +28,13 @@ const CardsDisplay = (props) => {
     setPreviousClickedItemPos(element);
   }
 
-  useEffect(() => {
-    if (selected) {
-    }
-}, [selected]);
+  const cardRef = useRef(null);
+
+//   useEffect(() => {
+//     if (selected) {
+//         cardRef.current.focus();
+//     }
+// }, [selected]);
 
 
   const getAllCards = () => {
@@ -153,6 +156,7 @@ const CardsDisplay = (props) => {
                       md={4}
                       lg={item && item == selected ? 12 :3}
                       key={i}
+                      ref = {cardRef}
                     >
                       <Card
                         card={item}
