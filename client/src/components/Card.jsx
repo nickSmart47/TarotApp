@@ -13,7 +13,8 @@ const Card = (props) => {
   const { handleClickList } = props;
 
   const handleClick = () => {
-    setShowDetails(!showDetails);
+    if (!showDetails) setShowDetails(true);
+    else setShowDetails(false);
     if (selected == props.card) {
       setSelected(null);
     } else setSelected(props.card);
