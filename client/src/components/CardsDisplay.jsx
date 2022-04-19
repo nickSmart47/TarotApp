@@ -16,26 +16,29 @@ const CardsDisplay = (props) => {
   const [selected, setSelected] = useState(null);
   const [showSelected, setShowSelected] = useState(false);
   const [shuffled, setShuffled] = useState(false);
-
   const [previousClickedItemPos, setPreviousClickedItemPos] = useState(0);
 
-  /* import useLocation so that useEffect can be invoked on-route-change */
-  const location = useLocation();
+  const refs = {};
+  useEffect(() => {
+    getAllCards();
+  }, []);
 
-  /* basically pass this to the list items so you can update position on-click */
-  function handleClickList(element) {
-    console.log("here, offset is", element);
-    setPreviousClickedItemPos(element);
-  }
+  useEffect(() => {
+    if (selected) {
+      let refId = selected.id;
+      scrollToCardRef(refId);
+      setPreviousClickedItemPos(selected.id);
+    } else scrollToCardRef(previousClickedItemPos);
+  }, [selected]);
 
-  const cardRef = useRef(null);
+  const scrollToCardRef = (refId) => {
+    if (refs) {
+        if (refs[refId]){
 
-//   useEffect(() => {
-//     if (selected) {
-//         cardRef.current.focus();
-//     }
-// }, [selected]);
-
+            refs[refId].scrollIntoView({ behavior: "smooth" });
+        }
+    }
+  };
 
   const getAllCards = () => {
     setSelected(null);
@@ -57,9 +60,7 @@ const CardsDisplay = (props) => {
     }
   };
 
-  useEffect(() => {
-    getAllCards();
-  }, []);
+
   const getRandomCard = () => {
     if (showCards) {
       setShowCards(!showCards);
@@ -128,17 +129,9 @@ const CardsDisplay = (props) => {
         <Grid
           container
           spacing={{ xs: 2, sm: 2, md: 3 }}
-          //   direction="row"
           justifyContent="center"
           alignItems="center"
         >
-          {selected && showSelected && !showCards ? (
-            <li className="list-inline-item">
-              <Card card={selected} theme={props.theme}></Card>
-            </li>
-          ) : (
-            <></>
-          )}
           {showCards ? (
             allCards
               .filter((item, i) => {
@@ -148,15 +141,14 @@ const CardsDisplay = (props) => {
               })
               .map((item, i) => {
                 return (
-                  <>
                     <Grid
                       item
-                      xs={item && item == selected ?  12 : 4}
+                      xs={item && item == selected ? 12 : 4}
                       sm={4}
                       md={4}
-                      lg={item && item == selected ? 12 :3}
-                      key={i}
-                      ref = {cardRef}
+                      lg={item && item == selected ? 12 : 3}
+                      key={item.id}
+                      ref={(ref) => (refs[item.id] = ref)}
                     >
                       <Card
                         card={item}
@@ -166,19 +158,10 @@ const CardsDisplay = (props) => {
                         previousClickedItemPos={previousClickedItemPos}
                         setPreviousClickedItemPos={setPreviousClickedItemPos}
                         theme={props.theme}
-                        handleClickList={handleClickList}
                         showDetails={showDetails}
                         setShowDetails={setShowDetails}
                       ></Card>
                     </Grid>
-                    {/* {selected == item ? (
-                      <Grid item xs={6} md={8}>
-                        <CardDetails card={item} theme={props.theme} />
-                      </Grid>
-                    ) : (
-                      <></>
-                    )} */}
-                  </>
                 );
               })
           ) : (
