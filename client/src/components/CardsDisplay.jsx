@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Card from "./Card";
-import CardDetails from "./CardDetails";
 import { Button, TextField } from "@mui/material";
 import { ThemeProvider, Grid } from "@mui/material";
-import { useLocation } from "react-router-dom";
 
 const CardsDisplay = (props) => {
   const [allCards, setAllCards] = useState(null);
@@ -177,13 +175,6 @@ const CardsDisplay = (props) => {
                   setSelected={setSelected}
                 ></Card>
               </Grid>
-              {/* {selected == randomCard ? (
-                <Grid item xs={7} md={8}>
-                  <CardDetails card={randomCard} theme={props.theme} />
-                </Grid>
-              ) : (
-                <></>
-              )} */}
             </>
           ) : (
             <></>
