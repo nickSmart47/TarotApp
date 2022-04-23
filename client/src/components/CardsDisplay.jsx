@@ -17,6 +17,7 @@ const CardsDisplay = (props) => {
   const [previousClickedItemPos, setPreviousClickedItemPos] = useState(0);
 
   const refs = {};
+  
   useEffect(() => {
     getAllCards();
   }, []);
@@ -32,7 +33,6 @@ const CardsDisplay = (props) => {
   const scrollToCardRef = (refId) => {
     if (refs) {
         if (refs[refId]){
-
             refs[refId].scrollIntoView({ behavior: "smooth" });
         }
     }
