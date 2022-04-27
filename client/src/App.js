@@ -1,7 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
 import CardsDisplay from "./components/CardsDisplay";
-import CardsDisplayAll from './components/CardsDisplayAll';
 import NavBar from "./components/Navbar";
 import Spread from "./components/Spread";
 import { BrowserRouter, Route, Router } from 'react-router-dom';
@@ -50,9 +49,6 @@ function App() {
       <BrowserRouter>
         <Route exact path={["/cards", "/"]}>
           <CardsDisplay theme={theme} />
-        </Route>
-        <Route exact path={["/cards/all"]}>
-          <CardsDisplayAll theme={theme} searchTerm = {''} />
         </Route>
         <Route exact path="/spreads">
           <Spread theme={theme} />
