@@ -215,9 +215,6 @@ const Spread = (props) => {
                       selected={selected}
                       setSelected={setSelected}
                     ></Card>
-                    {/* {selected == item ?
-                                        <CardDetails card={item} theme={props.theme} />
-                                        : <></>} */}
                   </Grid>
                 </>
               );
