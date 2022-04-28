@@ -27,6 +27,8 @@ const Spread = (props) => {
 
   const [allowReversals, setAllowReversals] = useState(false);
 
+  const refs = {};
+
   useEffect(() => {
     if (count === 0) {
     } else {
@@ -207,6 +209,7 @@ const Spread = (props) => {
                     lg={item && item == selected ? 12 : 3}
                     className="Gridst-inline-item"
                     key={i}
+                    ref={(ref) => (refs[item.id] = ref)}
                   >
                     <Card
                       card={item}
