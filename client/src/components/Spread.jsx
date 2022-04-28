@@ -200,16 +200,15 @@ const Spread = (props) => {
               return (
                 <>
                   <Grid
-                   item
-                   xs={item && item == selected ? 12 : 4}
-                   sm={4}
-                   md={4}
-                   lg={item && item == selected ? 12 : 3}
+                    item
+                    xs={item && item == selected ? 12 : 4}
+                    sm={4}
+                    md={4}
+                    lg={item && item == selected ? 12 : 3}
                     className="Gridst-inline-item"
                     key={i}
                   >
                     <Card
-                      
                       card={item}
                       theme={props.theme}
                       selected={selected}
