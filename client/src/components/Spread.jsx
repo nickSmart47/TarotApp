@@ -17,17 +17,30 @@ const Spread = (props) => {
   const [numCards, setNumCards] = useState(0);
   const [showSpread, setShowSpread] = useState(false);
   const [notes, setNotes] = useState("");
-
   const [selected, setSelected] = useState(null);
   const [currentCard, setCurrentCard] = useState(null);
-
   const [count, setCount] = useState(0);
-
   const [newSpread, setNewSpread] = useState(false);
-
   const [allowReversals, setAllowReversals] = useState(false);
+  const [previousClickedItemPos, setPreviousClickedItemPos] = useState(0);
 
   const refs = {};
+
+  useEffect(() => {
+    if (selected) {
+      let refId = selected.id;
+      scrollToCardRef(refId);
+      setPreviousClickedItemPos(selected.id);
+    } else scrollToCardRef(previousClickedItemPos);
+  }, [selected]);
+
+  const scrollToCardRef = (refId) => {
+    if (refs) {
+        if (refs[refId]){
+            refs[refId].scrollIntoView({ behavior: "smooth" });
+        }
+    }
+  };
 
   useEffect(() => {
     if (count === 0) {
@@ -65,7 +78,7 @@ const Spread = (props) => {
         if (res.data.errors) {
           console.log("errors here --->", res.data.errors);
         } else {
-          console.log("success!");
+          console.log("successfully saved spread");
         }
       })
       .catch((err) => {
