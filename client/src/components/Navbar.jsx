@@ -37,14 +37,15 @@ const Navbar = (props) => {
 
   return (
     <ThemeProvider theme={props.theme}>
-      <AppBar position="static" sx={{ justifyContent: "center" }}>
+      <AppBar position="static" sx={{ justifyContent: "center", alignItems: "center" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Typography
+              align = "center"
               variant="h6"
               noWrap
               component="div"
-              sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+              sx={{ mr: 2, display: { xs: "none", md: "flex" }, justifyContent: "center", alignItems: "center" }}
             >
               Tarot
             </Typography>
